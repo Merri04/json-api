@@ -16,7 +16,6 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
-import org.springframework.security.crypto.password.NoOpPasswordEncoder;
 
 
 import org.springframework.security.web.SecurityFilterChain;
@@ -63,7 +62,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
         //provider.setPasswordEncoder(NoOpPasswordEncoder.getInstance());
-        provider.setPasswordEncoder(new BCryptPasswordEncoder(12)); // Hash the password before validating it with the database (12 is the strength of the hashing)  12 er styrken på hashingen
+        provider.setPasswordEncoder(new BCryptPasswordEncoder(12));
         provider.setUserDetailsService(studentService);
         return provider;
     }

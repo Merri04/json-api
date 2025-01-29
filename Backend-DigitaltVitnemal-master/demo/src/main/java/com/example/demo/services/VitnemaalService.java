@@ -32,9 +32,6 @@ public class VitnemaalService {
         // Hent alle vitnemål for en spesifikk student
         List<Vitnemaal> vitnemaals = vitnemaalRepository.findByStudentStudentId(studentId);
         return vitnemaals.stream().map(vitnemal -> {
-            int totalPoeng = vitnemal.getKarakterer().stream()
-                    .mapToInt(Karakter::getPoeng)
-                    .sum();
         // Map alle vitnemål til StudentVitnemaalDTO
         return new StudentVitnemaalDTO(
                         vitnemal.getStudent().getNavn(),

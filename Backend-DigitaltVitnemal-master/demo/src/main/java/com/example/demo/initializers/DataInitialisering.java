@@ -6,7 +6,6 @@ import com.example.demo.models.Student;
 import com.example.demo.models.Utdanningssted;
 import com.example.demo.models.Vitnemaal;
 import com.example.demo.repositories.KarakterRepository;
-import com.example.demo.repositories.StudentRepository;
 import com.example.demo.repositories.UtdanningsstedRepository;
 import com.example.demo.repositories.VitnemaalRepository;
 import com.example.demo.services.StudentService;
@@ -36,7 +35,7 @@ public class DataInitialisering {
 
     @Bean
     @Transactional
-    CommandLineRunner seedDatabase(UtdanningsstedRepository utdanningsstedRepo, StudentRepository studentRepo, VitnemaalRepository diplomaRepo, KarakterRepository karakterRepo) {
+    CommandLineRunner seedDatabase(UtdanningsstedRepository utdanningsstedRepo, VitnemaalRepository diplomaRepo, KarakterRepository karakterRepo) {
         return args -> {
             // Utdanningssteder
             Utdanningssted osloMet = new Utdanningssted(

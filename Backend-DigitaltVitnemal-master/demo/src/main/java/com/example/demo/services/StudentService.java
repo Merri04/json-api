@@ -3,7 +3,6 @@ package com.example.demo.services;
 import com.example.demo.models.Student;
 import com.example.demo.models.StudentPrincipal;
 import com.example.demo.repositories.StudentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
