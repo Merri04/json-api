@@ -8,7 +8,8 @@ COPY mvnw mvnw
 COPY pom.xml .
 COPY src src
 
-
+#execute permission to the mvnw file
+RUN chmod +x mvnw
 #This is used to build the application
 RUN ./mvnw clean package -DskipTests
 
