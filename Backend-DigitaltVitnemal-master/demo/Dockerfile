@@ -8,6 +8,7 @@ COPY mvnw mvnw
 COPY pom.xml .
 COPY src src
 
+
 #This is used to build the application
 RUN ./mvnw clean package -DskipTests
 
@@ -16,7 +17,7 @@ FROM eclipse-temurin:17-alpine
 WORKDIR /app
 
 # Copies the built JAP file from the build stage
-COPY --from=build /app/target/*.jar app.jar
+COPY --from=build /app/target/DiplomaIssuer-0.0.1-SNAPSHOT.jar app.jar
 
 #sets the entry poing to run the JAR file
 ENTRYPOINT ["java","-jar","app.jar"]
