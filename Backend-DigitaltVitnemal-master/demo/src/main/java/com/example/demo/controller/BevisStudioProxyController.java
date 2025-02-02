@@ -50,6 +50,7 @@ public class BevisStudioProxyController {
                     System.err.println("Error fetching preauth: " + error.getMessage());
                     return Mono.just("{\"error\":\"Failed to fetch preauth.\"}");
                 });
+        //this
 
         // this combines responses into one
         return Mono.zip(diplomas, preauth)
