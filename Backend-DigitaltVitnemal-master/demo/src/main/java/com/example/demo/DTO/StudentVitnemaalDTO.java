@@ -1,6 +1,8 @@
 package com.example.demo.DTO;
 
 
+import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 /**

@@ -5,6 +5,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.*;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -86,5 +87,9 @@ public class Student {
     }
     public void setFullfort(boolean fullfort) {
         this.fullfort = fullfort;
+    }
+
+    public User orElseThrow(Object o) {
+        return null;
     }
 }
