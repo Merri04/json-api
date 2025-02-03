@@ -45,7 +45,7 @@ public class BevisStudioProxyController {
                 .headers(headers -> headers.setBasicAuth("S1212", "1212"))
                 .retrieve()
                 .bodyToMono(String.class)
-                .timeout(Duration.ofSeconds(10))
+                .timeout(Duration.ofSeconds(20))
                 .onErrorResume(error -> {
                     System.err.println("Error fetching preauth: " + error.getMessage());
                     return Mono.just("{\"error\":\"Failed to fetch preauth.\"}");

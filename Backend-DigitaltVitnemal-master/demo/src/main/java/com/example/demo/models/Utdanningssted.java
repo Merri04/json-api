@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,7 +22,7 @@ public class Utdanningssted {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long utdanningsstedId;
-
+    @JsonProperty("utdanningsnavn")
     private String utdanningsnavn;
 
     public Utdanningssted(String utdaningsnavn) {

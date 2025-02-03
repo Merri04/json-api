@@ -1,6 +1,7 @@
 package com.example.demo.models;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -24,9 +25,11 @@ public class Vitnemaal {
 
     @ManyToOne
     @JoinColumn(name = "utdanningssted_id")
+    @JsonProperty("utdanningssted")
     private Utdanningssted utdanningssted;
 
     @Column(name = "grad", nullable = false, length = 50)
+    @JsonProperty("grad")
     private String grad;
 
     private String utstedelsesdato;

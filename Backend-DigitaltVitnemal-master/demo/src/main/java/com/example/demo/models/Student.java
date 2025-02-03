@@ -1,5 +1,6 @@
 package com.example.demo.models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,8 +23,11 @@ public class Student {
     private Long studentId;
 
     private String studentnummer;
+    @JsonProperty("navn")
     private String navn;
+    @JsonProperty("fodselsnummer")
     private String fodselsnummer;
+    @JsonProperty("fullfort")
     private boolean fullfort;
 
 

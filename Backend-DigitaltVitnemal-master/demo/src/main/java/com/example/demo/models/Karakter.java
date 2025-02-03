@@ -2,6 +2,7 @@ package com.example.demo.models;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,11 +24,15 @@ public class Karakter {
     @JoinColumn(name = "vitnemal_id")
     @JsonIgnore
     private Vitnemaal vitnemaal;
-
+    @JsonProperty("fag")
     private String fag;
+    @JsonProperty("emnekode")
     private String emnekode;
+    @JsonProperty("karakter")
     private String karakter;
+    @JsonProperty("poeng")
     private int poeng;
+    @JsonProperty("arstall")
     private int arstall;
 
 
