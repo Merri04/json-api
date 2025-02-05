@@ -41,7 +41,8 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for the application
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/h2-console/**").permitAll()
-                    .requestMatchers("/api/diplomas/my-diplomas").authenticated()
+                    .requestMatchers("/api/diplomas/my-diplomas").permitAll()
+
                     // Allow access to H2 Console
                     .anyRequest().authenticated() // Secure all other endpoints
             )
