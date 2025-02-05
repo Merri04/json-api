@@ -4,22 +4,18 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/auth")
 public class ApiKeyController {
 
-    // Endepunkt for å generere og sende API-nøkkel
+    // Hardkodet API-nøkkel
+    private static final String API_KEY = "d3b07384d113edec49eaa6238ad5ff00";  // Eksempel på API-nøkkel
+
+    // Endepunkt for å hente den hardkodede API-nøkkelen
     @GetMapping(value = "/generate-api-key", produces = "application/json")
     public ResponseEntity<?> generateApiKey() {
-        // Generere en unik API-nøkkel (her bruker vi UUID)
-        String apiKey = UUID.randomUUID().toString();
-
-        // Her kan du lagre nøkkelen i en database hvis du ønsker å koble den til en bruker eller til annen informasjon.
-        // For nå returnerer vi bare den genererte nøkkelen.
-
-        return ResponseEntity.ok(new ApiKeyResponse(apiKey));
+        return ResponseEntity.ok(new ApiKeyResponse(API_KEY));
     }
 
     // Response-klassen for å returnere API-nøkkelen

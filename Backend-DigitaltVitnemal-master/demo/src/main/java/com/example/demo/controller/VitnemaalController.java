@@ -49,6 +49,21 @@ public class VitnemaalController {
         return "your-secure-api-key".equals(apiKey);
     }*/
 
+    //med validering
+
+    /*@GetMapping(value = "/my-diplomas", produces = "application/json")
+    public ResponseEntity<?> getAllDiplomaData(@AuthenticationPrincipal StudentPrincipal studentPrincipal,
+                                               @RequestParam("api_key") String apiKey) {
+        // Valider API-nøkkelen (bruk den faste nøkkelen)
+        if (!API_KEY.equals(apiKey)) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Invalid API key");
+        }
+
+        Long studentId = studentPrincipal.getStudentId();
+        List<StudentVitnemaalDTO> studentDiplomas = vitnemaalService.getGroupedDiplomaData(studentId);
+        return ResponseEntity.ok(studentDiplomas);
+    }*/
+
     @GetMapping(value = "/my-diplomas", produces = "application/json")
     public ResponseEntity<?> getAllDiplomaData(@AuthenticationPrincipal StudentPrincipal studentPrincipal) {
         Long studentId = studentPrincipal.getStudentId();
