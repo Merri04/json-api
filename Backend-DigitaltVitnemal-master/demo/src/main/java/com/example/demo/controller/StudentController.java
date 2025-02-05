@@ -23,7 +23,7 @@ public class StudentController {
         this.studentService = studentService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/student")
     public String home( Authentication authentication) {
         Student student = studentService.getStudent(authentication.getName());
 
