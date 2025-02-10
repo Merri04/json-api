@@ -29,7 +29,7 @@ import java.util.List;
 public class DataInitialisering {
 
     @Autowired
-    private StudentService studentService; // this is for the password hashing in the saveStudent method
+    private StudentService studentService;
 
     private static final Logger logger = LoggerFactory.getLogger(DataInitialisering.class);
 

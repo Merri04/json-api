@@ -8,14 +8,14 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            text-align: center;
-            margin: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
         }
-        input {
-            padding: 10px;
-            width: 80%;
-            max-width: 400px;
-            margin-bottom: 10px;
+        .container {
+            text-align: center;
         }
         button {
             padding: 10px 15px;
@@ -24,6 +24,7 @@
             color: white;
             border: none;
             border-radius: 5px;
+            margin-top: 20px;
         }
         #qrcode {
             margin-top: 20px;
@@ -32,29 +33,40 @@
 </head>
 <body>
 
-<h1>QR-kode Generator</h1>
-<p>Skriv inn en URL for å generere en QR-kode:</p>
-
-<input type="text" id="urlInput" placeholder="https://example.com">
-<button onclick="generateQR()">Generer QR-kode</button>
-
-<div id="qrcode"></div>
+<div class="container">
+    <h1>Scann for å få ditt  digitale vitnemål</h1>
+    <div id="qrcode"></div>
+</div>
 
 <script>
-    function generateQR() {
-        let url = document.getElementById("urlInput").value;
-        let qrContainer = document.getElementById("qrcode");
+    window.onload = function() {
+        fetchQRCode();
+    };
 
-        qrContainer.innerHTML = "";
-        if (url.trim() !== "") {
-            new QRCode(qrContainer, {
-                text: url,
-                width: 200,
-                height: 200
+    function fetchQRCode() {
+        fetch('/api/bevis/send')
+            .then(response => response.json())
+            .then(data => {
+                if (data.url) {
+                    generateQRCodeFromAPI(data.url);
+                } else {
+                    alert("Ingen URL mottatt fra API");
+                }
+            })
+            .catch(error => {
+                console.error("Feil ved henting av QR-kode:", error);
+                alert("Feil ved henting av QR-kode");
             });
-        } else {
-            alert("Skriv inn URLen");
-        }
+    }
+
+    function generateQRCodeFromAPI(url) {
+        let qrContainer = document.getElementById("qrcode");
+        qrContainer.innerHTML = "";
+        new QRCode(qrContainer, {
+            text: url,
+            width: 300,
+            height: 300
+        });
     }
 </script>
 
