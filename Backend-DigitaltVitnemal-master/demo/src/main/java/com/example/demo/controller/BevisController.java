@@ -2,9 +2,12 @@ package com.example.demo.controller;
 
 import com.example.demo.client.BevisClient;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
 
 /**
@@ -24,9 +27,13 @@ public class BevisController {
         this.bevisClient = bevisClient;
     }
 
-
     @GetMapping("/send")
-    public Mono<String> sendBevisRequest() {
-        return bevisClient.sendPostRequest();
+    public Mono<ResponseEntity<String>> sendBevisRequest() {
+        return bevisClient.sendPostRequest()
+                .map(ResponseEntity::ok)
+                .onErrorResume(WebClientResponseException.class, ex -> Mono.just(ResponseEntity.status(ex.getStatusCode())
+                        .body("Feil ved forespørsel: " + ex.getResponseBodyAsString())))
+                .onErrorResume(Exception.class, ex -> Mono.just(ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Uventet feil: " + ex.getMessage())));
     }
 }
