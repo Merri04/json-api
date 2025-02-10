@@ -25,7 +25,7 @@ public class StudentController {
 
     @GetMapping("/student")
     public String home( Authentication authentication) {
-        Student student = studentService.getStudent(authentication.getName());
+        Student student = studentService.getStudentByFodselsnummer(authentication.getName());
 
         return student.getStudentnummer();
     }

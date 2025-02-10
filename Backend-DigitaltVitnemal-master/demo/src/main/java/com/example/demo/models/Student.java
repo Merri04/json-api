@@ -1,14 +1,15 @@
 package com.example.demo.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
  *
@@ -23,11 +24,10 @@ public class Student {
     private Long studentId;
 
     private String studentnummer;
-    @JsonProperty("navn")
     private String navn;
-    @JsonProperty("fodselsnummer")
+    @NotBlank(message = "Fødselsnummer cannot be blank")
+    @Pattern(regexp = "\\d{11}", message = "Fødselsnummer must be exactly 11 digits")
     private String fodselsnummer;
-    @JsonProperty("fullfort")
     private boolean fullfort;
 
 

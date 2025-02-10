@@ -49,7 +49,6 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .headers(headers -> headers
                     .frameOptions(frameOptions -> frameOptions.sameOrigin()) // Enable frames for H2 Console
             )
-
             .httpBasic(Customizer.withDefaults())
             .formLogin(Customizer.withDefaults())
             .logout(Customizer.withDefaults())

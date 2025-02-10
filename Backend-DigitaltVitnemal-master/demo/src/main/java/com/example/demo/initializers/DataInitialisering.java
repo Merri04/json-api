@@ -51,7 +51,7 @@ public class DataInitialisering {
 
             // student 1
             Student john = new Student(
-                    "S1234567", "John Doe", "12345678901", "121212", true
+                    "S1234567", "John Doe", "12345678901", "Strong@password12", true
             );
 
             // student 2
@@ -59,7 +59,7 @@ public class DataInitialisering {
                     "S1212",
                     "Merri Sium",
                     "10987654321",
-                    "1212",
+                    "Strong@password22",
                     true
             );
 
