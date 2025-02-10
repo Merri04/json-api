@@ -64,6 +64,7 @@ public class VitnemaalController {
         return ResponseEntity.ok(studentDiplomas);
     }*/
 
+    //forslag til endringer "/my-diplomas"  --> "/my-diplomas/{fodselsnummeret}
     @GetMapping(value = "/my-diplomas", produces = "application/json")
     public ResponseEntity<?> getAllDiplomaData(@AuthenticationPrincipal StudentPrincipal studentPrincipal) {
         Long studentId = studentPrincipal.getStudentId();

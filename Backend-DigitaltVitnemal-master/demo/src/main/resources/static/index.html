@@ -45,7 +45,7 @@
         let url = document.getElementById("urlInput").value;
         let qrContainer = document.getElementById("qrcode");
 
-        qrContainer.innerHTML = ""; // Tøm tidligere QR-koder
+        qrContainer.innerHTML = "";
         if (url.trim() !== "") {
             new QRCode(qrContainer, {
                 text: url,
@@ -53,7 +53,7 @@
                 height: 200
             });
         } else {
-            alert("Vennligst skriv inn en gyldig URL.");
+            alert("Skriv inn URLen");
         }
     }
 </script>
