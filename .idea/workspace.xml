@@ -5,41 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="169c3198-3d71-4c39-86f2-709918719b63" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/test/java/com/example/demo/models/StudentValidationTests.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/README.md" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/favicon.ico" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/index.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/logo192.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/logo512.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/manifest.json" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/public/robots.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/App.test.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/App.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/layout/App.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/index.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/index.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/logo.svg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/react-app-env.d.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/reportWebVitals.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/setupTests.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/tsconfig.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/Bachelor.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/Bachelor.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Login-Logout/LogOut.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/components/Login-Logout/Login.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/controller/StudentController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/controller/StudentController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/initializers/DataInitialisering.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/initializers/DataInitialisering.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/models/Student.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/models/Student.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/repositories/StudentRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/repositories/StudentRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/services/StudentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/services/StudentService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +139,7 @@
       <workItem from="1738831636229" duration="4604000" />
       <workItem from="1738949754305" duration="2608000" />
       <workItem from="1739180652264" duration="2044000" />
-      <workItem from="1739182735772" duration="4032000" />
+      <workItem from="1739182735772" duration="5025000" />
     </task>
     <servers />
   </component>
