@@ -2,6 +2,7 @@ package com.example.demo.config;
 
 
 
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,11 +20,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
 /**
  *
- * @Author Elise Strand Bråtveit
+ * @Author Elise Strand Bråtveit og Merri Sium Berhe
  * @Version 22.01.2025
  */
 
@@ -34,24 +38,45 @@ public class SecurityConfig {
     @Autowired
     private UserDetailsService studentService;
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.addAllowedOriginPattern("http://localhost:3000"); // Allow your frontend URL
+        configuration.addAllowedMethod("*"); // Allow all HTTP methods (GET, POST, etc.)
+        configuration.addAllowedHeader("*"); // Allow all headers
+        configuration.setAllowCredentials(true);
+
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration); // Apply to all endpoints
+        return source;
+    }
+
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
     return http
+            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for the application
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/h2-console/**").permitAll()
-                    .requestMatchers("/api/diplomas/my-diplomas").permitAll()
-
-                    // Allow access to H2 Console
-                    .anyRequest().authenticated() // Secure all other endpoints
+                    .requestMatchers("/h2-console/**", "/login", "/api/diplomas/my-diplomas").permitAll()
+                    // alt annet krever innloging for å få tilgang
+                    .anyRequest().authenticated()
             )
             .headers(headers -> headers
-                    .frameOptions(frameOptions -> frameOptions.sameOrigin()) // Enable frames for H2 Console
+                    .frameOptions(frameOptions -> frameOptions.sameOrigin())
             )
             .httpBasic(Customizer.withDefaults())
-            .formLogin(Customizer.withDefaults())
-            .logout(Customizer.withDefaults())
+            .formLogin(form -> form
+                    .loginProcessingUrl("/login") // Sett API-endepunkt for login
+                    .successHandler((req, res, auth) -> res.setStatus(HttpServletResponse.SC_OK)) // JSON-basert respons
+                    .failureHandler((req, res, ex) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED))) // Returner feil
+            .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/login")
+                    .clearAuthentication(true)
+                    .invalidateHttpSession(true)
+                    .permitAll()
+            )
             .build();
 }
 

@@ -5,9 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="169c3198-3d71-4c39-86f2-709918719b63" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Login-Logout/LogOut.tsx" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/components/Login-Logout/Login.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/config/SecurityConfig.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login-Logout/LogOut.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login-Logout/LogOut.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/Login-Logout/Login.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/Login-Logout/Login.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/components/layout/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/layout/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/setupTests.ts" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/setupTests.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -37,6 +42,9 @@
     &quot;accountId&quot;: &quot;cde3a05e-ce69-4f8a-a208-bd2f5503f486&quot;
   }
 }</component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 2
 }</component>
@@ -139,7 +147,7 @@
       <workItem from="1738831636229" duration="4604000" />
       <workItem from="1738949754305" duration="2608000" />
       <workItem from="1739180652264" duration="2044000" />
-      <workItem from="1739182735772" duration="5025000" />
+      <workItem from="1739182735772" duration="9977000" />
     </task>
     <servers />
   </component>
