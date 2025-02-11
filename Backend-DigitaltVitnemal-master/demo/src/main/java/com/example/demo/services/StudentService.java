@@ -29,6 +29,7 @@ public class StudentService implements UserDetailsService {
     private final Validator validator;
     private final StudentRepository studentRepo;
 
+
     @Autowired
     public StudentService(StudentRepository studentRepo, Validator validator) {
         this.studentRepo = studentRepo;
@@ -51,6 +52,16 @@ public class StudentService implements UserDetailsService {
     public Student getStudentByFodselsnummer(String fodselsnummer) {
         return studentRepo.findByFodselsnummer(fodselsnummer);
     }
+
+
+    public Long getstudentIdByFodeselnummer(String fodselsnummer){
+        Student temp = getStudentByFodselsnummer(fodselsnummer);
+        return temp.getStudentId();
+    }
+
+
+
+
     // Password validation method
     private boolean validatePassword(String password) {
         String passwordRegex = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$";
