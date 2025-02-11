@@ -41,7 +41,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOriginPattern("http://localhost:3000"); // Allow your frontend URL
+        configuration.addAllowedOriginPattern("http://localhost:3000"); // Allow requests from the frontend
         configuration.addAllowedMethod("*"); // Allow all HTTP methods (GET, POST, etc.)
         configuration.addAllowedHeader("*"); // Allow all headers
         configuration.setAllowCredentials(true);
@@ -58,7 +58,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for the application
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/h2-console/**", "/login", "/api/diplomas/my-diplomas").permitAll()
+                    .requestMatchers("/h2-console/**", "/login", "/api/diplomas/my-diplomas/*").permitAll()
                     // alt annet krever innloging for å få tilgang
                     .anyRequest().authenticated()
             )
