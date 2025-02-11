@@ -5,13 +5,10 @@ import com.example.demo.DTO.StudentVitnemaalDTO;
 import com.example.demo.models.Vitnemaal;
 import com.example.demo.repositories.VitnemaalRepository;
 import org.springframework.stereotype.Service;
-import com.example.demo.models.Karakter;
-
-
 import java.util.List;
 import java.util.stream.Collectors;
 
-//import static java.util.stream.Nodes.collect;
+
 
 /**
  *

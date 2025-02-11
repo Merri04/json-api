@@ -14,6 +14,7 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
@@ -35,8 +36,13 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 @EnableWebSecurity
 public class SecurityConfig {
 
+
+    private final UserDetailsService studentService;
+
     @Autowired
-    private UserDetailsService studentService;
+    public SecurityConfig(UserDetailsService studentService){
+        this.studentService = studentService;
+    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -59,11 +65,10 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for the application
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/h2-console/**", "/login", "/api/diplomas/my-diplomas/*").permitAll()
-                    // alt annet krever innloging for å få tilgang
                     .anyRequest().authenticated()
             )
             .headers(headers -> headers
-                    .frameOptions(frameOptions -> frameOptions.sameOrigin())
+                    .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
             )
             .httpBasic(Customizer.withDefaults())
             .formLogin(form -> form

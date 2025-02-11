@@ -28,8 +28,13 @@ import java.util.List;
 @Configuration
 public class DataInitialisering {
 
+
+    private final StudentService studentService;
+
     @Autowired
-    private StudentService studentService;
+    public DataInitialisering(StudentService studentService){
+        this.studentService = studentService;
+    }
 
     private static final Logger logger = LoggerFactory.getLogger(DataInitialisering.class);
 

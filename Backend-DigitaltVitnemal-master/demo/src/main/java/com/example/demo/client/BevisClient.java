@@ -6,22 +6,21 @@ import com.example.demo.services.JWTService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.reactive.function.client.WebClient;
-import org.springframework.web.reactive.function.client.WebClientResponseException;
 import reactor.core.publisher.Mono;
-import org.springframework.http.HttpStatus;
+
 
 
 
 /**
  *
-
- @Author Elise Strand Bråtveit
- @Version 29.01.2025*/
+ * @Author Elise Strand Bråtveit
+ @Version 29.01.2025
+ */
 
 @Component
 public class BevisClient {
 
-    private final WebClient webClient; // istedenfor RestTemplate
+    private final WebClient webClient;
 
     @Autowired
     public BevisClient(WebClient.Builder webClientBuilder) {

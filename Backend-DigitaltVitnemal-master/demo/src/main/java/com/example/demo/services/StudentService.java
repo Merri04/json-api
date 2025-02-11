@@ -25,12 +25,14 @@ import java.util.stream.Collectors;
 @Service
 public class StudentService implements UserDetailsService {
 
-    @Autowired
-    private Validator validator;
+
+    private final Validator validator;
     private final StudentRepository studentRepo;
 
-    public StudentService(StudentRepository studentRepo) {
+    @Autowired
+    public StudentService(StudentRepository studentRepo, Validator validator) {
         this.studentRepo = studentRepo;
+        this.validator = validator;
     }
 
 
