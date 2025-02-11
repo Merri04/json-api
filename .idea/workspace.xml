@@ -4,16 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="169c3198-3d71-4c39-86f2-709918719b63" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/pages/Home/home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/config/SecurityConfig.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/config/SecurityConfig.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/controller/VitnemaalController.java" beforeDir="false" afterPath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/java/com/example/demo/controller/VitnemaalController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Backend-DigitaltVitnemal-master/demo/src/main/resources/static/index.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/components/layout/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/components/layout/App.tsx" afterDir="false" />
-    </list>
+    <list default="true" id="169c3198-3d71-4c39-86f2-709918719b63" name="Changes" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -147,7 +138,7 @@
       <workItem from="1739182735772" duration="5025000" />
       <workItem from="1739217500664" duration="674000" />
       <workItem from="1739261585930" duration="117000" />
-      <workItem from="1739266269786" duration="3952000" />
+      <workItem from="1739266269786" duration="4390000" />
     </task>
     <servers />
   </component>

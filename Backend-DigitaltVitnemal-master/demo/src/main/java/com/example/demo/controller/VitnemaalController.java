@@ -30,7 +30,7 @@ public class VitnemaalController {
     public ResponseEntity<?> getAllDiplomaData(@PathVariable Long id) {
 
         List<StudentVitnemaalDTO> studentDiplomas = vitnemaalService.getGroupedDiplomaData(id);
-        return ResponseEntity.ok(studentDiplomas);
+        return ResponseEntity.ok(studentDiplomas.stream().findFirst());
     }
 }
 
