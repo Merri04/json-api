@@ -25,13 +25,14 @@ public class BevisClient {
 
     private final WebClient webClient;
     private String fodselsnummer;
+    private final JWTService jwtService;
 
     private static final Logger logger = LoggerFactory.getLogger(BevisClient.class);
 
     @Autowired
-    public BevisClient(WebClient.Builder webClientBuilder, StudentService studentService) {
+    public BevisClient(WebClient.Builder webClientBuilder, JWTService jwtService ) {
         this.webClient = webClientBuilder.baseUrl("https://prototype-lomino-issuer.azurewebsites.net").build();
-
+        this.jwtService = jwtService;
     }
 
     public void setFodelsesnummer(String fodselsnummer){
@@ -42,7 +43,8 @@ public class BevisClient {
         String url = "/api/preauthorize";
 
         String templateId = "vitnemal-833671fd-BU";
-        String idToken = JWTService.generateToken(fodselsnummer);
+        String idToken = jwtService.generateToken("10987654321");
+        logger.info("jwt-token  " + idToken);
 
 
         TemplateResponseDTO requestBody = new TemplateResponseDTO(templateId, idToken);
