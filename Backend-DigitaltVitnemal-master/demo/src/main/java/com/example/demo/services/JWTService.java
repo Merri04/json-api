@@ -20,6 +20,7 @@ import java.util.Base64;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 
 /**
@@ -45,6 +46,7 @@ public class JWTService {
 
     }
 
+
     public String generateToken(String fodselsnummer) {
         Map<String, Object> clamis = new HashMap<>();
         return Jwts.builder()
@@ -52,7 +54,7 @@ public class JWTService {
                 .add(clamis)
                 .subject(fodselsnummer)
                 .issuedAt(new Date(System.currentTimeMillis()))
-                .expiration(new Date(System.currentTimeMillis()+ 60 * 60 * 90 ))
+                .expiration(new Date(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(7)))
                 .and()
                 .signWith(getKey())
                 .compact();
@@ -81,19 +83,17 @@ public class JWTService {
                 .getPayload();
     }
 
-    /*public boolean validateToken(String token, UserDetails userDetails) {
-        final String userName = extractUserName(token);
-        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
-    }*/
 
-    private boolean isTokenExpired(String token) {
+}
+
+/*private boolean isTokenExpired(String token) {
         return extractExpiration(token).before(new Date());
     }
 
     private Date extractExpiration(String token) {
         return extractClaim(token, Claims::getExpiration);
-    }
-
-
-
-}
+    }*/
+    /*public boolean validateToken(String token, UserDetails userDetails) {
+        final String userName = extractUserName(token);
+        return (userName.equals(userDetails.getUsername()) && !isTokenExpired(token));
+    }*/

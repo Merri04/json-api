@@ -43,7 +43,8 @@ public class BevisClient {
         String url = "/api/preauthorize";
 
         String templateId = "vitnemal-833671fd-BU";
-        String idToken = jwtService.generateToken("10987654321");
+        //String idToken = jwtService.generateToken("10987654321");
+        String idToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDk4NzY1NDMyMSIsImlhdCI6MTczOTU0Nzc1NSwiZXhwIjoxNzQwMTUyNTU1fQ.2BMCMAfkRdPJDGWvyoN6pLW8xGir7ZAaSRgB33ruyvo";
         logger.info("jwt-token  " + idToken);
 
 
