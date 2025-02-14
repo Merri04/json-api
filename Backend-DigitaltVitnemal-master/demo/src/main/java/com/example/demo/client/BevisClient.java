@@ -18,6 +18,8 @@ import reactor.core.publisher.Mono;
  @Version 29.01.2025
  */
 
+//TODO: Sjekk denne klassen JWT
+
 @Component
 public class BevisClient {
 
@@ -39,9 +41,8 @@ public class BevisClient {
     public Mono<String> sendPostRequest() {
         String url = "/api/preauthorize";
 
-        String templateId = "exampleType-61552628-BU";
+        String templateId = "vitnemal-833671fd-BU";
         String idToken = JWTService.generateToken(fodselsnummer);
-        logger.info("testtest" + fodselsnummer);
 
 
         TemplateResponseDTO requestBody = new TemplateResponseDTO(templateId, idToken);
