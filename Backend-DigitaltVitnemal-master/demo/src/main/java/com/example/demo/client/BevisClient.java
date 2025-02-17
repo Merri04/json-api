@@ -18,18 +18,21 @@ import reactor.core.publisher.Mono;
  @Version 29.01.2025
  */
 
+//TODO: Sjekk denne klassen JWT
+
 @Component
 public class BevisClient {
 
     private final WebClient webClient;
     private String fodselsnummer;
+    private final JWTService jwtService;
 
     private static final Logger logger = LoggerFactory.getLogger(BevisClient.class);
 
     @Autowired
-    public BevisClient(WebClient.Builder webClientBuilder, StudentService studentService) {
+    public BevisClient(WebClient.Builder webClientBuilder, JWTService jwtService ) {
         this.webClient = webClientBuilder.baseUrl("https://prototype-lomino-issuer.azurewebsites.net").build();
-
+        this.jwtService = jwtService;
     }
 
     public void setFodelsesnummer(String fodselsnummer){
@@ -39,9 +42,16 @@ public class BevisClient {
     public Mono<String> sendPostRequest() {
         String url = "/api/preauthorize";
 
+<<<<<<< HEAD
         String templateId = "exampleType-61552628-BU";
         String idToken = JWTService.generateToken(fodselsnummer);
         logger.info("Sender forespørsel til {} med templateId {} og idToken {}", url, templateId, idToken);
+=======
+        String templateId = "vitnemal-833671fd-BU";
+        //String idToken = jwtService.generateToken("10987654321");
+        String idToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDk4NzY1NDMyMSIsImlhdCI6MTczOTU0Nzc1NSwiZXhwIjoxNzQwMTUyNTU1fQ.2BMCMAfkRdPJDGWvyoN6pLW8xGir7ZAaSRgB33ruyvo";
+        logger.info("jwt-token  " + idToken);
+>>>>>>> 5b021d5fb68140a41842c0691b9ebc4073fb880f
 
 
         TemplateResponseDTO requestBody = new TemplateResponseDTO(templateId, idToken);
