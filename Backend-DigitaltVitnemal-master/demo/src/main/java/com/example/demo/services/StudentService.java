@@ -5,7 +5,11 @@ import com.example.demo.models.StudentPrincipal;
 import com.example.demo.repositories.StudentRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -13,6 +17,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -28,7 +33,7 @@ public class StudentService implements UserDetailsService {
 
     private final Validator validator;
     private final StudentRepository studentRepo;
-
+    private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
     @Autowired
     public StudentService(StudentRepository studentRepo, Validator validator) {
@@ -48,16 +53,16 @@ public class StudentService implements UserDetailsService {
         return new StudentPrincipal(student);
     }
 
-@Transactional(readOnly = true)
-    public Student getStudentByFodselsnummer(String fodselsnummer) {
-        return studentRepo.findByFodselsnummer(fodselsnummer);
+
+    @Transactional(readOnly = true)
+    public Optional<Long> getStudentIdByFodselsnummer(String fodselsnummer) {
+        logger.info("Ser etter student med fødselsnummer: {}", fodselsnummer);
+        return Optional.ofNullable(studentRepo.findByFodselsnummer(fodselsnummer))
+                .map(Student::getStudentId);
     }
 
 
-    public Long getstudentIdByFodeselnummer(String fodselsnummer){
-        Student temp = getStudentByFodselsnummer(fodselsnummer);
-        return temp.getStudentId();
-    }
+
 
 
 

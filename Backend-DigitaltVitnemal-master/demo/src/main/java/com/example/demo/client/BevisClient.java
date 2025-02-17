@@ -41,7 +41,7 @@ public class BevisClient {
 
         String templateId = "exampleType-61552628-BU";
         String idToken = JWTService.generateToken(fodselsnummer);
-        logger.info("testtest" + fodselsnummer);
+        logger.info("Sender forespørsel til {} med templateId {} og idToken {}", url, templateId, idToken);
 
 
         TemplateResponseDTO requestBody = new TemplateResponseDTO(templateId, idToken);
@@ -50,7 +50,9 @@ public class BevisClient {
                 .uri(url)
                 .bodyValue(requestBody)
                 .retrieve()
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .doOnSuccess(response -> logger.info("Mottatt respons fra iGrant: {}", response))
+                .doOnError(error -> logger.error("Feil ved forespørsel til iGrant: {}", error));
 
     }
 }
