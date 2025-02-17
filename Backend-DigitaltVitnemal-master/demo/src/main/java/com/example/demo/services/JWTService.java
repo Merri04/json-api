@@ -47,7 +47,7 @@ public class JWTService {
     }
 
 
-    public static String generateToken(String fodselsnummer) {
+    public String generateToken(String fodselsnummer) {
         Map<String, Object> clamis = new HashMap<>();
         return Jwts.builder()
                 .claims()
