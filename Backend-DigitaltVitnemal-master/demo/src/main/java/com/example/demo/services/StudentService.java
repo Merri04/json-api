@@ -5,10 +5,14 @@ import com.example.demo.models.StudentPrincipal;
 import com.example.demo.repositories.StudentRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -32,6 +37,7 @@ public class StudentService implements UserDetailsService {
     private final Validator validator;
     private final StudentRepository studentRepo;
     private final AuthenticationManager authenticationManager;
+    private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
 
 
     @Autowired
@@ -53,16 +59,16 @@ public class StudentService implements UserDetailsService {
         return new StudentPrincipal(student);
     }
 
+
 @Transactional(readOnly = true)
     public Student getStudentByFodselsnummer(String fodselsnummer) {
         return studentRepo.findByUsername(fodselsnummer);
+
+    
     }
 
 
-    public Long getstudentIdByFodeselnummer(String fodselsnummer){
-        Student temp = getStudentByFodselsnummer(fodselsnummer);
-        return temp.getStudentId();
-    }
+
 
 
 
@@ -107,4 +113,8 @@ public class StudentService implements UserDetailsService {
     }
 
 
+    public Optional<Long> getStudentIdByFodselsnummer(String fodselsnummer) {
+        return Optional.ofNullable(studentRepo.findByUsername(fodselsnummer))
+                .map(Student::getStudentId);
+    }
 }

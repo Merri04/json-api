@@ -43,11 +43,17 @@ public class BevisClient {
     public Mono<String> sendPostRequest() {
         String url = "/api/preauthorize";
 
+
+
         String templateId = "vitnemal-833671fd-BU";
         //String idToken = jwtService.generateToken("10987654321");
         String idToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDk4NzY1NDMyMSIsImlhdCI6MTczOTU0Nzc1NSwiZXhwIjoxNzQwMTUyNTU1fQ.2BMCMAfkRdPJDGWvyoN6pLW8xGir7ZAaSRgB33ruyvo";
         logger.info("jwt-token  " + idToken);
-        //logger.info("x-api-key " + ApiKeyUtil.generateApiKey());
+
+
+        logger.info("Sender forespørsel til {} med templateId {} og idToken {}", url, templateId, idToken);
+
+
 
 
         TemplateResponseDTO requestBody = new TemplateResponseDTO(templateId, idToken);
@@ -56,7 +62,9 @@ public class BevisClient {
                 .uri(url)
                 .bodyValue(requestBody)
                 .retrieve()
-                .bodyToMono(String.class);
+                .bodyToMono(String.class)
+                .doOnSuccess(response -> logger.info("Mottatt respons fra iGrant: {}", response))
+                .doOnError(error -> logger.error("Feil ved forespørsel til iGrant: {}", error));
 
     }
 }
