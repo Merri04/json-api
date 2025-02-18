@@ -7,7 +7,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.userdetails.User;
 
@@ -27,17 +26,17 @@ public class Student {
     private String navn;
     @NotBlank(message = "Fødselsnummer cannot be blank")
     @Pattern(regexp = "\\d{11}", message = "Fødselsnummer must be exactly 11 digits")
-    private String fodselsnummer;
+    private String username;
     private boolean fullfort;
 
 
     private String password; // Password for authentication
 
     // Parameterized constructor to initialize fields
-    public Student(String studentnummer, String navn, String fodselsnummer, String password, boolean fullfort) {
+    public Student(String studentnummer, String navn, String username, String password, boolean fullfort) {
         this.studentnummer = studentnummer;
         this.navn = navn;
-        this.fodselsnummer = fodselsnummer;
+        this.username = username;
         this.password = password;
         this.fullfort = fullfort;
 
@@ -72,11 +71,11 @@ public class Student {
     }
 
 
-    public String getFodselsnummer() {
-        return fodselsnummer;
+    public String getUsername() {
+        return username;
     }
-    public void setFodselsnummer(String fodselsnummer) {
-        this.fodselsnummer = fodselsnummer;
+    public void setUsername(String fodselsnummer) {
+        this.username = fodselsnummer;
     }
 
     public String getPassword() {

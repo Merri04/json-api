@@ -32,7 +32,7 @@ public class VitnemaalService {
         // Map alle vitnemål til StudentVitnemaalDTO
         return new StudentVitnemaalDTO(
                         vitnemal.getStudent().getNavn(),
-                        vitnemal.getStudent().getFodselsnummer(),
+                        vitnemal.getStudent().getUsername(),
                         vitnemal.getStudent().isFullfort(),
                         vitnemal.getUtdanningssted().getUtdanningsnavn(),
                         vitnemal.getGrad(),

@@ -4,6 +4,7 @@ package com.example.demo.client;
 import com.example.demo.DTO.TemplateResponseDTO;
 import com.example.demo.services.JWTService;
 import com.example.demo.services.StudentService;
+import com.example.demo.util.ApiKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import reactor.core.publisher.Mono;
  @Version 29.01.2025
  */
 
-//TODO: Sjekk denne klassen JWT
+//TODO: Sjekk denne klassen JWT - JWT token er hardkodet inn for å testet
 
 @Component
 public class BevisClient {
@@ -46,6 +47,7 @@ public class BevisClient {
         //String idToken = jwtService.generateToken("10987654321");
         String idToken = "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDk4NzY1NDMyMSIsImlhdCI6MTczOTU0Nzc1NSwiZXhwIjoxNzQwMTUyNTU1fQ.2BMCMAfkRdPJDGWvyoN6pLW8xGir7ZAaSRgB33ruyvo";
         logger.info("jwt-token  " + idToken);
+        //logger.info("x-api-key " + ApiKeyUtil.generateApiKey());
 
 
         TemplateResponseDTO requestBody = new TemplateResponseDTO(templateId, idToken);

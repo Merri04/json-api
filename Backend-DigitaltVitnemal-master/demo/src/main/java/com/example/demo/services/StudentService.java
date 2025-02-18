@@ -6,6 +6,9 @@ import com.example.demo.repositories.StudentRepository;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -28,19 +31,21 @@ public class StudentService implements UserDetailsService {
 
     private final Validator validator;
     private final StudentRepository studentRepo;
+    private final AuthenticationManager authenticationManager;
 
 
     @Autowired
-    public StudentService(StudentRepository studentRepo, Validator validator) {
+    public StudentService(StudentRepository studentRepo, Validator validator, AuthenticationManager authenticationManager) {
         this.studentRepo = studentRepo;
         this.validator = validator;
+        this.authenticationManager = authenticationManager;
     }
 
 
     @Override
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String fodselsnummer) throws UsernameNotFoundException {
-        Student student = studentRepo.findByFodselsnummer(fodselsnummer);
+        Student student = studentRepo.findByUsername(fodselsnummer);
         if (student == null) {
             System.out.println("User Not Found");
             throw new UsernameNotFoundException("user not found");
@@ -50,7 +55,7 @@ public class StudentService implements UserDetailsService {
 
 @Transactional(readOnly = true)
     public Student getStudentByFodselsnummer(String fodselsnummer) {
-        return studentRepo.findByFodselsnummer(fodselsnummer);
+        return studentRepo.findByUsername(fodselsnummer);
     }
 
 
@@ -90,6 +95,15 @@ public class StudentService implements UserDetailsService {
         // Hash the password before saving
         student.setPassword(new BCryptPasswordEncoder(12).encode(student.getPassword()));
         studentRepo.save(student);
+    }
+
+    public String verify(Student student) {
+        Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(student.getUsername(), student.getPassword()));
+        //RefreshToken refreshToken = refreshTokenService.createRefreshToken(authenticatedUser);
+        if(authentication.isAuthenticated()){
+            return "sucess";
+        }
+        return "Fail";
     }
 
 

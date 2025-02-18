@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
@@ -40,7 +41,7 @@ public class SecurityConfig {
     private final UserDetailsService studentService;
 
     @Autowired
-    public SecurityConfig(UserDetailsService studentService){
+    public SecurityConfig(@Lazy UserDetailsService studentService){
         this.studentService = studentService;
     }
 
@@ -64,17 +65,13 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for the application
             .authorizeHttpRequests(auth -> auth
-                    .requestMatchers("/h2-console/**", "/login", "/api/diplomas/my-diplomas/*").permitAll()
+                    .requestMatchers("/h2-console/**", "/auth/login", "/api/diplomas/my-diplomas/*").permitAll()
                     .anyRequest().authenticated()
             )
             .headers(headers -> headers
                     .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
             )
             .httpBasic(Customizer.withDefaults())
-            .formLogin(form -> form
-                    .loginProcessingUrl("/login") // Sett API-endepunkt for login
-                    .successHandler((req, res, auth) -> res.setStatus(HttpServletResponse.SC_OK)) // JSON-basert respons
-                    .failureHandler((req, res, ex) -> res.sendError(HttpServletResponse.SC_UNAUTHORIZED))) // Returner feil
             .logout(logout -> logout
                     .logoutUrl("/logout")
                     .logoutSuccessUrl("/login")
@@ -99,10 +96,10 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
     }
 
     // this is for the authentication manager vet ikke om vi trenger det
-    @Bean
+   /* @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
 
-    }
+    }*/
 
 }
