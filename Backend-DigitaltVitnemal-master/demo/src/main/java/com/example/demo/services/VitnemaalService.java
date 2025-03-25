@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-
-
 /**
  *
  * @Author Merri Sium Berhe
@@ -37,6 +35,7 @@ public class VitnemaalService {
                         vitnemal.getUtdanningssted().getUtdanningsnavn(),
                         vitnemal.getGrad(),
                         vitnemal.calculateTotalPoints(),
+                        vitnemal.getUtstedelsesdato(),
                         vitnemal.getKarakterer().stream()
                                 .map(karakter -> new KarakterDTO(
                                         karakter.getFag(),

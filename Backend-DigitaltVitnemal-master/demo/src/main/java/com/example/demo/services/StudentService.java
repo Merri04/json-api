@@ -32,13 +32,10 @@ import java.util.stream.Collectors;
  */
 @Service
 public class StudentService implements UserDetailsService {
-
-
     private final Validator validator;
     private final StudentRepository studentRepo;
     private final AuthenticationManager authenticationManager;
     private static final Logger logger = LoggerFactory.getLogger(StudentService.class);
-
 
     @Autowired
     public StudentService(StudentRepository studentRepo, Validator validator, AuthenticationManager authenticationManager) {
@@ -46,7 +43,6 @@ public class StudentService implements UserDetailsService {
         this.validator = validator;
         this.authenticationManager = authenticationManager;
     }
-
 
     @Override
     @Transactional(readOnly = true)
@@ -59,19 +55,12 @@ public class StudentService implements UserDetailsService {
         return new StudentPrincipal(student);
     }
 
-
 @Transactional(readOnly = true)
     public Student getStudentByFodselsnummer(String fodselsnummer) {
         return studentRepo.findByUsername(fodselsnummer);
 
     
     }
-
-
-
-
-
-
 
     // Password validation method
     private boolean validatePassword(String password) {
@@ -111,7 +100,6 @@ public class StudentService implements UserDetailsService {
         }
         return "Fail";
     }
-
 
     public Optional<Long> getStudentIdByFodselsnummer(String fodselsnummer) {
         return Optional.ofNullable(studentRepo.findByUsername(fodselsnummer))

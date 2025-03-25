@@ -22,12 +22,6 @@ public class StudentPrincipal implements UserDetails {
 
         this.student = student;
     }
-    public Long getStudentId() {
-        return student.getStudentId();
-    }
-    public String getNavn() {
-        return student.getNavn();
-    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return Collections.singleton(new SimpleGrantedAuthority("USER"));
@@ -41,7 +35,7 @@ public class StudentPrincipal implements UserDetails {
 
     @Override
     public String getUsername() {
-        return student.getStudentnummer();
+        return student.getUsername();
     }
 
     @Override

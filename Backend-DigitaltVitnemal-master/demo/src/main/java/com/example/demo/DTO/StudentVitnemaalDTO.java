@@ -1,8 +1,7 @@
 package com.example.demo.DTO;
 
 
-import org.springframework.stereotype.Component;
-
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -19,17 +18,27 @@ public class StudentVitnemaalDTO {
     private String utdanningsnavn;
     private String grad;
     private int sum;
+    //private String utstedelsesdato;
+    private LocalDate utstedelsesdato;
     private List<KarakterDTO> karakterer;
 
-    public StudentVitnemaalDTO(String navn, String fodselsnummer, boolean fullfort, String utdanningsnavn, String grad, int sum, List<KarakterDTO> karakterer) {
+    public StudentVitnemaalDTO(String navn, String fodselsnummer, boolean fullfort, String utdanningsnavn, String grad, int sum, String utstedelsesdato, List<KarakterDTO> karakterer) {
         this.navn = navn;
         this.fodselsnummer = fodselsnummer;
         this.fullfort = fullfort;
         this.utdanningsnavn = utdanningsnavn;
         this.grad = grad;
         this.sum = sum;
+        this.utstedelsesdato = utstedelsesdato != null ? LocalDate.parse(utstedelsesdato) : null;
         this.karakterer = karakterer;
 
+    }
+    //public String getUtstedelsesdato() {
+      //  return utstedelsesdato;
+   // }
+
+    public LocalDate getUtstedelsesdato() {
+        return utstedelsesdato;
     }
 
     public String getNavn() {
@@ -82,6 +91,7 @@ public class StudentVitnemaalDTO {
     public List<KarakterDTO> getKarakterer() {
         return karakterer;
     }
+
 
     public void setKarakterer(List<KarakterDTO> karakterer) {
         this.karakterer = karakterer;

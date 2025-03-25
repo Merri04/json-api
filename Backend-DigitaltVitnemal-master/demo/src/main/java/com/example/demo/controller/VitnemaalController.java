@@ -57,8 +57,6 @@ public class VitnemaalController {
         }
 
         return ResponseEntity.ok(studentDiplomas.stream().findFirst());
-
-
     }
 }
 

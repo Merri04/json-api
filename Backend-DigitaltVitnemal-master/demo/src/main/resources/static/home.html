@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digitalt Vitnemål</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f8f9fa;
+      display: flex;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .container {
+      background-color: white;
+      padding: 20px;
+      width: 900px;
+      border: 1px solid #ddd;
+      box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+    .logout-button {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      background-color: #8d9195;
+      color: white;
+      border: none;
+      padding: 4px 6px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 14px;
+    }
+
+    .logout-button:hover {
+      background-color: #868be3;
+    }
+    .header {
+      text-align: center;
+      font-size: 24px;
+      font-weight: bold;
+      padding: 10px 0;
+      border-bottom: 2px solid #ddd;
+      background-color: #1a56c6;
+      position: relative;
+      color: white;
+    }
+
+    .content {
+      display: flex;
+      justify-content: space-between;
+      padding: 20px;
+    }
+
+    .info {
+      width: 65%;
+      font-size: 16px;
+    }
+
+    .qr-section {
+      width: 30%;
+      text-align: center;
+      display: flex;
+      padding-left: 20px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      border-left: 2px solid #ddd;
+      height: 100%;
+
+    }
+
+    .qr-section p {
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .grades-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      color: white;
+    }
+    .grades-table td {
+      color: black; /* Color for the fetched content */
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .grades-table th {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    .grades-table th {
+      background-color: #307dca;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <button class="logout-button" onclick="logout()">Logg ut</button>
+
+  <div class="header">Digitalt Vitnemål</div>
+
+  <div class="content">
+    <!-- Studentinformasjon (Venstre) -->
+    <div class="info" id="student-info"></div>
+
+    <!-- QR-kode seksjon (Høyre) -->
+    <div class="qr-section">
+      <p>Scan for å få ditt digitale vitnemål</p>
+      <div id="qrcode" class="qr-code"></div>
+    </div>
+  </div>
+
+  <!-- Karakterutskrift (Venstre) -->
+  <h2>Karakterutskrift</h2>
+  <table class="grades-table" id="grades-table">
+    <tr>
+      <th>Fag</th>
+      <th>Emnekode</th>
+      <th>Karakter</th>
+      <th>Poeng</th>
+      <th>År</th>
+    </tr>
+  </table>
+</div>
+
+<script>
+  async function getFodselsnummer() {
+
+    try {
+      const response = await fetch("/api/user/current", { credentials: "include" });
+      if (!response.ok) {
+        throw new Error("Kunne ikke hente innlogget bruker");
+      }
+      const data = await response.json();
+      console.log("Bruker funnet:", data.fodselsnummer);
+      return data.fodselsnummer;
+    } catch (error) {
+      console.error("Feil ved henting av innlogget bruker:", error);
+      return null;
+    }
+  }
+
+  async function fetchVitnemal(fodselsnummer) {
+    try {
+      const response = await fetch(`/api/diplomas/my-diplomas/12345678901`);
+      if (!response.ok) {
+        throw new Error("Kunne ikke hente vitnemål");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Feil ved henting av vitnemål:", error);
+      return null;
+    }
+  }
+
+  function displayVitnemal(vitnemal) {
+    const container = document.getElementById("student-info");
+    const gradesTable = document.getElementById("grades-table");
+
+    if (!vitnemal) {
+      container.innerHTML = "<p>Ingen vitnemål funnet.</p>";
+      return;
+    }
+
+    container.innerHTML = `
+        <p>${vitnemal.navn}</p>
+        <p>${vitnemal.utdanningsnavn}</p>
+        <p><strong>Grad:</strong> ${vitnemal.grad}</p>
+        <p><strong>Totalt studiepoeng:</strong> ${vitnemal.sum}</p>
+        <p><strong>FUllført: </strong>${vitnemal.fullfort}</p>
+        <p><strong>Dato for fullført utdanning:</strong> ${vitnemal.utstedelsesdato || "Ukjent"}</p>
+    `;
+
+    gradesTable.innerHTML = `
+        <tr>
+            <th>Fag</th>
+            <th>Emnekode</th>
+            <th>Karakter</th>
+            <th>Poeng</th>
+            <th>År</th>
+        </tr>
+    `;
+
+    vitnemal.karakterer.forEach(karakter => {
+      const row = document.createElement("tr");
+      row.innerHTML = `
+            <td>${karakter.fag}</td>
+            <td>${karakter.emnekode}</td>
+            <td>${karakter.karakter}</td>
+            <td>${karakter.poeng}</td>
+            <td>${karakter.arstall}</td>
+        `;
+      gradesTable.appendChild(row);
+    });
+  }
+
+  async function generateQRCode(fodselsnummer) {
+    try {
+      console.log("Henter vitnemål for fødselsnummer:", fodselsnummer);
+
+      // Hent vitnemål fra API med API-nøkkel
+      const response = await fetch(`/api/diplomas/my-diplomas/12345678901`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": "Bearer e49154a1-7598-425a-ae42-1c93d55cade0"  // API-nøkkel fra bevisstudio er inkludert her
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error(`Kunne ikke hente vitnemål. Status: ${response.status}`);
+      }
+
+      const diplomaData = await response.json();
+      console.log("Vitnemålsdata mottatt:", diplomaData);
+
+      // Send vitnemålet til iGrant for pre-authorized link
+      const igrantResponse = await fetch("/proxy/igrant", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          templateId: "vitnemal-833671fd-BU",
+          idToken: "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxMDk4NzY1NDMyMSIsImlhdCI6MTczOTU0Nzc1NSwiZXhwIjoxNzQwMTUyNTU1fQ.2BMCMAfkRdPJDGWvyoN6pLW8xGir7ZAaSRgB33ruyvo", // Din JWT-token for autentisering
+          data: diplomaData
+        })
+      });
+
+      if (!igrantResponse.ok) {
+        throw new Error("Kunne ikke sende til iGrant.");
+      }
+// 📌 Logg hele responsen FØR vi prøver å parse den
+      const textResponse = await igrantResponse.text();
+      console.log("📌 iGrant Response:", textResponse);
+
+
+// generer QR-kode med URL
+      document.getElementById("qrcode").innerHTML = "";
+      new QRCode(document.getElementById("qrcode"), {
+        text: textResponse,
+        width: 128,
+        height: 128
+      });
+      console.log("QR-kode generert med URL:", textResponse);
+
+
+      //console.log("QR-kode generert med URL:", qrData);
+
+    } catch (error) {
+      console.error("Feil ved generering av QR-kode:", error);
+    }
+  }
+
+
+  async function logout() {
+    try {
+      const response = await fetch("/api/user/logout", {
+        method: "GET",
+        credentials: "include"
+      });
+      if (response.ok) {
+        alert("Du er nå logget ut.");
+        window.location.href = "login.html"; // Omdirigerer til login-siden
+      } else {
+        alert("Kunne ikke logge ut. Prøv igjen.");
+      }
+    } catch (error) {
+      console.error("Feil under utlogging:", error);
+    }
+  }
+  document.addEventListener("DOMContentLoaded", async function () {
+    const fodselsnummer = await getFodselsnummer();
+
+    if (!fodselsnummer) {
+      console.error("❌ Ingen innlogget bruker funnet");
+      alert("Du må logge inn for å se vitnemålet.");
+      window.location.href = "login.html"; // Send brukeren til innloggingssiden
+      return;
+    }
+
+    const vitnemalListe = await fetchVitnemal(fodselsnummer);
+    if (vitnemalListe) {
+      displayVitnemal(vitnemalListe);
+      generateQRCode(fodselsnummer);
+    }
+  });
+</script>
+
+</body>
+</html>

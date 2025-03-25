@@ -2,7 +2,6 @@ package com.example.demo.config;
 
 
 
-import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,14 +21,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
 
 
 /**
  *
- * @Author Elise Strand Bråtveit og Merri Sium Berhe
+ * @Author Elise Strand Bråtveit
  * @Version 22.01.2025
  */
 
@@ -45,24 +42,12 @@ public class SecurityConfig {
         this.studentService = studentService;
     }
 
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        CorsConfiguration configuration = new CorsConfiguration();
-        configuration.addAllowedOriginPattern("http://localhost:3000"); // Allow requests from the frontend
-        configuration.addAllowedMethod("*"); // Allow all HTTP methods (GET, POST, etc.)
-        configuration.addAllowedHeader("*"); // Allow all headers
-        configuration.setAllowCredentials(true);
 
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        source.registerCorsConfiguration("/**", configuration); // Apply to all endpoints
-        return source;
-    }
 
 @Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
     return http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
             .csrf(AbstractHttpConfigurer::disable) // Disable CSRF for the application
             .authorizeHttpRequests(auth -> auth
                     .requestMatchers("/h2-console/**", "/auth/login", "/api/diplomas/my-diplomas/*").permitAll()
@@ -71,14 +56,18 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
             .headers(headers -> headers
                     .frameOptions(HeadersConfigurer.FrameOptionsConfig::sameOrigin)
             )
-            .httpBasic(Customizer.withDefaults())
-            .logout(logout -> logout
-                    .logoutUrl("/logout")
-                    .logoutSuccessUrl("/login")
-                    .clearAuthentication(true)
-                    .invalidateHttpSession(true)
+            .formLogin(form -> form
+                    .defaultSuccessUrl("/home.html", true) // ✅ Redirect to home.html after login
                     .permitAll()
             )
+            .logout(logout -> logout
+                    .logoutUrl("/logout")
+                    .logoutSuccessUrl("/home.html") // ✅ Redirect to home page after logout
+                    .invalidateHttpSession(true)
+                    .clearAuthentication(true)
+                    .permitAll()
+            )
+            .httpBasic(Customizer.withDefaults()) // Enable basic auth
             .build();
 }
 
@@ -95,11 +84,8 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         return provider;
     }
 
-    // this is for the authentication manager vet ikke om vi trenger det
-   /* @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
+    @Bean
+        public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
-
-    }*/
-
+    }
 }

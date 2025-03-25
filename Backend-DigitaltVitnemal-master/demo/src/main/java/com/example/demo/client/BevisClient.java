@@ -3,8 +3,6 @@ package com.example.demo.client;
 
 import com.example.demo.DTO.TemplateResponseDTO;
 import com.example.demo.services.JWTService;
-import com.example.demo.services.StudentService;
-import com.example.demo.util.ApiKeyUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
