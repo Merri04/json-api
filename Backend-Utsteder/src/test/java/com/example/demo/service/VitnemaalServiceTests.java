@@ -11,7 +11,6 @@ import com.example.demo.services.VitnemaalService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -40,7 +39,7 @@ class VitnemaalServiceTests {
     void setUp() {
         student = new Student();
         student.setStudentId(1L);
-        student.setNavn("Merri Sium Berhe");
+        student.setNavn("Sara Doe");
         student.setUsername("12345678910");
         student.setFullfort(true);
 
@@ -77,7 +76,7 @@ class VitnemaalServiceTests {
         assertEquals(1, result.size());
 
         StudentVitnemaalDTO dto = result.get(0);
-        assertEquals("Merri Sium Berhe", dto.getNavn());
+        assertEquals("Sara Doe", dto.getNavn());
         assertEquals("12345678910", dto.getFodselsnummer());
         assertEquals(true, dto.isFullfort());
         assertEquals("OsloMet", dto.getUtdanningsnavn());
@@ -98,7 +97,7 @@ class VitnemaalServiceTests {
         verify(vitnemaalRepository, times(1)).findByStudentStudentId(1L);
     }
 
-    // Test for å hente vitnemål med ugyldig studentId (ingen resultater)
+    // Test for å hente vitnemål med ugyldig studentId
     @Test
     void testGetGroupedDiplomaData_InvalidStudentId() {
         // Arrange
@@ -111,11 +110,10 @@ class VitnemaalServiceTests {
         assertNotNull(result);
         assertTrue(result.isEmpty());
 
-        // Verifiser at metoden ble kalt én gang
+        // Verifiser at metoden ble kalt en gang
         verify(vitnemaalRepository, times(1)).findByStudentStudentId(2L);
     }
 
-    // Test for å sikre at DTO-er er korrekt mappet
     @Test
     void testMappingToDTO() {
         // Arrange
@@ -129,7 +127,7 @@ class VitnemaalServiceTests {
         StudentVitnemaalDTO dto = result.get(0);
         assertEquals("Bachelor", dto.getGrad());
         assertEquals(10, dto.getSum());
-        assertEquals("Merri Sium Berhe", dto.getNavn());
+        assertEquals("Sara Doe", dto.getNavn());
         assertEquals("OsloMet", dto.getUtdanningsnavn());
         assertEquals(1, dto.getKarakterer().size());
         KarakterDTO karakterDTO = dto.getKarakterer().get(0);

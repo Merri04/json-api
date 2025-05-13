@@ -1,14 +1,11 @@
-/*package com.example.demo.controller;
+package com.example.demo.controller;
 
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpSession;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.TestingAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,7 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+
 
 @ExtendWith(MockitoExtension.class)
 class UserControllerTest {
@@ -24,29 +21,39 @@ class UserControllerTest {
     @InjectMocks
     private UserController userController;
 
-    @Mock
-    private SecurityContext securityContext;
-
-    @Mock
-    private Authentication authentication;
-
-    @Mock
-    private HttpServletRequest request;
-
-    @Mock
-    private HttpSession session;
-
     @BeforeEach
-    void setUp() {
-        SecurityContextHolder.setContext(securityContext);
+    void clearSecurityContext() {
+        SecurityContextHolder.clearContext();
     }
 
-
-    // Test for manglende autentisering
     @Test
-    void testGetCurrentUser_UnauthenticatedUser() {
+    void getCurrentUser_whenAuthenticated_shouldReturnFodselsnummer() {
         // Arrange
-        when(securityContext.getAuthentication()).thenReturn(null);
+        String mockFodselsnummer = "12345678901";
+        Authentication authentication = new TestingAuthenticationToken(mockFodselsnummer, null);
+        authentication.setAuthenticated(true);
+
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(authentication);
+        SecurityContextHolder.setContext(context);
+
+        // Act
+        Map<String, String> result = userController.getCurrentUser();
+
+        // Assert
+        assertNotNull(result);
+        assertEquals(mockFodselsnummer, result.get("fodselsnummer"));
+    }
+
+    @Test
+    void getCurrentUser_whenNotAuthenticated_shouldThrowException() {
+        // Arrange
+        Authentication unauthenticated = new TestingAuthenticationToken("nope", null);
+        unauthenticated.setAuthenticated(false);
+
+        SecurityContext context = SecurityContextHolder.createEmptyContext();
+        context.setAuthentication(unauthenticated);
+        SecurityContextHolder.setContext(context);
 
         // Act & Assert
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
@@ -54,17 +61,12 @@ class UserControllerTest {
         });
 
         assertEquals("Ingen bruker er logget inn.", exception.getMessage());
-
-        // Verifiser at autentisering ble hentet
-        verify(securityContext).getAuthentication();
     }
 
-    // Test for manglende innlogging (ikke autentisert)
     @Test
-    void testGetCurrentUser_NotAuthenticated() {
+    void getCurrentUser_whenAuthenticationIsNull_shouldThrowException() {
         // Arrange
-        when(securityContext.getAuthentication()).thenReturn(authentication);
-        when(authentication.isAuthenticated()).thenReturn(false);
+        SecurityContextHolder.clearContext();
 
         // Act & Assert
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
@@ -72,46 +74,5 @@ class UserControllerTest {
         });
 
         assertEquals("Ingen bruker er logget inn.", exception.getMessage());
-
-        // Verifiser at autentisering ble hentet
-        verify(securityContext).getAuthentication();
-        verify(authentication).isAuthenticated();
-    }
-
-    // Test for logout med aktiv session
-    @Test
-    void testLogout_WithActiveSession() {
-        // Arrange
-        when(request.getSession(false)).thenReturn(session);
-
-        // Act
-        ResponseEntity<String> response = AuthController.(request);
-
-        // Assert
-        assertNotNull(response);
-        assertEquals("Logged out successfully", response.getBody());
-        assertEquals(200, response.getStatusCode().value());
-
-        //  Verifiser at session ble invalidert
-        verify(session).invalidate();
-    }
-
-    // Test for logout uten aktiv session
-    @Test
-    void testLogout_NoActiveSession() {
-        // Arrange
-        when(request.getSession(false)).thenReturn(null);
-
-        // Act
-        ResponseEntity<String> response = userController.logout(request);
-
-        // Assert
-        assertNotNull(response);
-        assertEquals("Logged out successfully", response.getBody());
-        assertEquals(200, response.getStatusCode().value());
-
-        // Verifiser at ingen session ble invalidert
-        verifyNoInteractions(session);
     }
 }
-*/

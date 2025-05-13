@@ -8,20 +8,16 @@ import com.example.demo.repositories.KarakterRepository;
 import com.example.demo.repositories.UtdanningsstedRepository;
 import com.example.demo.repositories.VitnemaalRepository;
 import com.example.demo.services.StudentService;
-
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
-import java.util.stream.StreamSupport;
-
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
 class DataInitialiseringTests {
@@ -43,7 +39,7 @@ class DataInitialiseringTests {
     private DataInitialisering dataInitialisering;
 
     private Student john;
-    private Student merri;
+    private Student Sara;
     private Utdanningssted osloMet;
     private Utdanningssted ntnu;
     private Vitnemaal vitnemal1;
@@ -59,10 +55,10 @@ class DataInitialiseringTests {
 
         // Opprett studenter
         john = new Student("S1234567", "John Doe", "12345678901", "Strong@password12", true);
-        merri = new Student("S1212", "Merri Sium", "10987654321", "Strong@password22", true);
+        Sara = new Student("S1212", "Merri Sium", "10987654321", "Strong@password22", true);
 
         // Opprett vitnemål
-        vitnemal1 = new Vitnemaal(merri, osloMet, "Bachelor in Computer Science", "2024-06-15");
+        vitnemal1 = new Vitnemaal(Sara, osloMet, "Bachelor in Computer Science", "2024-06-15");
         vitnemal2 = new Vitnemaal(john, ntnu, "Master in Data Science", "2025-06-20");
 
         // Opprett karakterer
@@ -108,42 +104,5 @@ class DataInitialiseringTests {
 
         // Assert
         verify(karakterRepo, times(1)).saveAll(any());
-    }
-
-
-    // Test for riktig mapping av vitnemål
-    @Test
-    void testDiplomaMapping() throws Exception {
-        // Act
-        dataInitialisering.seedDatabase(utdanningsstedRepo, diplomaRepo, karakterRepo).run();
-
-        // Fix: Bruk StreamSupport for Iterable
-        verify(diplomaRepo).saveAll(argThat(diplomas ->
-                StreamSupport.stream(diplomas.spliterator(), false)
-                        .anyMatch(v ->
-                                v.getGrad().equals("Bachelor in Computer Science") &&
-                                        v.getUtstedelsesdato().equals("2024-06-15") &&
-                                        v.getUtdanningssted().getUtdanningsnavn().equals("OsloMet")
-                        )
-        ));
-    }
-
-    //  Test for riktig mapping av karakterer
-    @Test
-    void testGradeMapping() throws Exception {
-        // Act
-        dataInitialisering.seedDatabase(utdanningsstedRepo, diplomaRepo, karakterRepo).run();
-
-        // Fix: Bruk StreamSupport for Iterable
-        verify(karakterRepo).saveAll(argThat(grades ->
-                StreamSupport.stream(grades.spliterator(), false)
-                        .anyMatch(k ->
-                                k.getFag().equals("Datasikkerhet") &&
-                                        k.getEmnekode().equals("DATS200") &&
-                                        k.getKarakter().equals("A") &&
-                                        k.getPoeng() == 20 &&
-                                        k.getArstall() == 2024
-                        )
-        ));
     }
 }

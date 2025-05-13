@@ -6,18 +6,13 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-
-import java.security.NoSuchAlgorithmException;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 class JWTServiceTests {
 
@@ -138,4 +133,5 @@ class JWTServiceTests {
                         .getPayload());
     }
 }
+
 

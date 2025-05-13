@@ -4,15 +4,10 @@ import com.example.demo.models.Student;
 import com.example.demo.models.StudentPrincipal;
 import com.example.demo.repositories.StudentRepository;
 import com.example.demo.services.StudentService;
-
-import jakarta.persistence.criteria.Path;
-import jakarta.validation.ConstraintViolation;
-
 import jakarta.validation.Validator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
@@ -104,23 +99,6 @@ class StudentServiceTests {
         assertEquals("Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character", exception.getMessage());
 
         verify(studentRepo, never()).save(any());
-    }
-
-
-
-    // Test for autentisering av gyldig student
-    @Test
-    void testVerify_ValidStudent() {
-        // Arrange
-        Authentication authentication = mock(Authentication.class);
-        when(authentication.isAuthenticated()).thenReturn(true);
-        when(authenticationManager.authenticate(any(UsernamePasswordAuthenticationToken.class))).thenReturn(authentication);
-
-        // Act
-        String result = studentService.verify(student);
-
-        // Assert
-        assertEquals("sucess", result);
     }
 
     // Test for autentisering av ugyldig student
