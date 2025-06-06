@@ -8,10 +8,12 @@ package com.example.demo.DTO;
 public class TemplateResponseDTO {
     private String templateId;
     private String idToken;
+    private String credentialFormat;
 
-    public TemplateResponseDTO(String templateId, String idToken) {
+    public TemplateResponseDTO(String templateId, String idToken, String credentialFormat) {
         this.templateId = templateId;
         this.idToken = idToken;
+        this.credentialFormat = credentialFormat;
     }
     public String getTemplateId() {
         return templateId;
@@ -27,5 +29,12 @@ public class TemplateResponseDTO {
 
     public void setIdToken(String idToken) {
         this.idToken = idToken;
+    }
+
+    public String getCredentialFormat() {
+        return credentialFormat;
+    }
+    public void setCredentialFormat(String credentialFormat) {
+        this.credentialFormat = credentialFormat;
     }
 }

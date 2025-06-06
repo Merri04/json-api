@@ -38,8 +38,9 @@ public class BevisClient {
         String url = "/api/preauthorize";
         String templateId = "vitnemal-833671fd-BU";
         String idToken = jwtService.generateToken(fodselsnummer);
+        String credentialFormat = "jwt_vc";
 
-        TemplateResponseDTO requestBody = new TemplateResponseDTO(templateId, idToken);
+        TemplateResponseDTO requestBody = new TemplateResponseDTO(templateId, idToken, credentialFormat);
         return webClient.post()
                 .uri(url)
                 .header("Authorization", "Bearer " + jwtService.generateToken(fodselsnummer))
